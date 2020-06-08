@@ -1,23 +1,20 @@
-# Custom
+# Various caches
 .parcel-cache
 .stylelintcache
+.cache
 
+# Various bundle folders
 public
 build
 lib
 dist
 
-packages/**/lib
-packages/**/build
-packages/**/public
-packages/**/dist
+
+# In production stacks never commit `.env.*` files.
+# .env
 
 # Apple cache file
 .DS_Store
-
-# Vim accidents
-*:p
-:w
 
 # Next is created by https://www.gitignore.io/api/node,vim,sublimetext,intellij,webstorm,visualstudiocode
 # Edit at https://www.gitignore.io/?templates=node,vim,sublimetext,intellij,webstorm,visualstudiocode
@@ -296,13 +293,3 @@ tags
 # Sonarlint plugin
 
 # End of https://www.gitignore.io/api/node,vim,sublimetext,intellij,webstorm,visualstudiocode
-
-.env
-.env.local
-.env.override
-.env.development
-.env.development.local
-.env.test
-.env.test.local
-.env.production
-.env.production.local
