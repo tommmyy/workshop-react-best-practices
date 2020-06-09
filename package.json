@@ -2,42 +2,25 @@
 	"name": "workshop-react-best-practices",
 	"version": "0.1.0",
 	"private": true,
-	"dependencies": {
-		"@testing-library/jest-dom": "^4.2.4",
-		"@testing-library/react": "^9.3.2",
-		"@testing-library/user-event": "^7.1.2",
-		"react": "^16.13.1",
-		"react-dom": "^16.13.1",
-		"react-scripts": "3.4.1"
-	},
 	"devDependencies": {
 		"eslint-config-react-union": "^0.15.0",
 		"eslint-plugin-babel": "^5.2.0",
 		"eslint-plugin-import": "^2.14.0",
 		"eslint-plugin-react": "^7.12.3",
-		"eslint-plugin-react-hooks": "^2.3.0"
+		"eslint-plugin-react-hooks": "^2.3.0",
+		"husky": "^4.2.5",
+		"lint-staged": "^10.2.9",
+		"prettier": "^2.0.5"
 	},
 	"scripts": {
-		"start": "react-scripts start",
-		"build": "react-scripts build",
-		"test": "react-scripts test",
-		"eject": "react-scripts eject"
+		"start": "yarn workshop start",
+		"build": "yarn workshop build",
+		"workshop": "yarn workspace @workshop/workshop"
 	},
-	"eslintConfig": {
-		"extends": [
-			"./eslintrc"
-		]
-	},
-	"browserslist": {
-		"production": [
-			">0.2%",
-			"not dead",
-			"not op_mini all"
-		],
-		"development": [
-			"last 1 chrome version",
-			"last 1 firefox version",
-			"last 1 safari version"
-		]
-	}
+	"workspaces": [
+		"workshop",
+		"server",
+		"exercises/*",
+		"solutions/*"
+	]
 }
