@@ -11,7 +11,7 @@ dist
 
 
 # In production stacks never commit `.env.*` files.
-# .env
+.env
 
 # Apple cache file
 .DS_Store

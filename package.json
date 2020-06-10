@@ -3,23 +3,29 @@
 	"version": "0.1.0",
 	"private": true,
 	"devDependencies": {
-		"eslint-config-react-union": "^0.15.0",
+		"chalk": "^4.1.0",
+		"eslint-config-react-union": "^0.18.0",
 		"eslint-plugin-babel": "^5.2.0",
 		"eslint-plugin-import": "^2.14.0",
 		"eslint-plugin-react": "^7.12.3",
-		"eslint-plugin-react-hooks": "^2.3.0",
+		"eslint-plugin-react-hooks": "^4.0.4",
+		"fs-extra": "^9.0.1",
 		"husky": "^4.2.5",
 		"lint-staged": "^10.2.9",
 		"prettier": "^2.0.5"
 	},
 	"scripts": {
 		"start": "yarn workshop start",
+		"start:server": "yarn server start",
 		"build": "yarn workshop build",
-		"workshop": "yarn workspace @workshop/workshop"
+		"init:dev": "node tools/setupDev",
+		"workshop": "yarn workspace @workshop/workshop",
+		"server": "yarn workspace @workshop/server"
 	},
 	"workspaces": [
 		"workshop",
 		"server",
+		"config",
 		"exercises/*",
 		"solutions/*"
 	]

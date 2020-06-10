@@ -1,5 +1,4 @@
 const { keys, replace, filter, map, compose, test } = require('ramda');
-const { toCamelCase } = require('ramda-extension');
 const fs = require('fs-extra');
 
 const { dependencies } = require('./package.json');

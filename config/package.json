@@ -1,0 +1,10 @@
+{
+	"name": "@workshop/config",
+	"version": "0.1.0",
+	"main": "src/index.js",
+	"private": true,
+	"dependencies": {
+		"envalid": "^6.0.2",
+		"ramda": "^0.27.0"
+	}
+}
