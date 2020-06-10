@@ -1,25 +1,33 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 
-function useInterval(callback, delay) {
-	const savedCallback = useRef();
-
-	// Remember the latest function.
+const useInterval = (callback, delay) => {
+	const callbackRef = useRef(callback);
 	useEffect(() => {
-		savedCallback.current = callback;
+		callbackRef.current = callback;
 	}, [callback]);
 
-	// Set up the interval.
 	useEffect(() => {
-		function tick() {
-			savedCallback.current();
-		}
-		if (delay !== null) {
-			const id = setInterval(tick, delay);
-			return () => clearInterval(id);
+		if (delay != null && callbackRef.current) {
+			const id = setInterval(() => callbackRef.curent(), delay);
+
+			return () => {
+				clearInterval(id);
+			};
 		}
 	}, [delay]);
-}
+};
+
 const noop = () => {};
+
+const useCommitedRef = (value) => {
+	const ref = useRef(value);
+
+	useEffect(() => {
+		ref.current = value;
+	}, [value]);
+
+	return ref;
+};
 
 const useWebsocket = ({
 	url,
@@ -28,99 +36,106 @@ const useWebsocket = ({
 	onOpen: onOpenProp = noop,
 	onMessage: onMessageProp = noop,
 }) => {
-	const wsRef = useRef();
-	const onMessage = useRef(onMessageProp);
-	const onClose = useRef(onCloseProp);
-	const onError = useRef(onErrorProp);
-	const onOpen = useRef(onOpenProp);
-
+	const ws = useRef();
 	const [reconnectionInterval, setReconnectionInterval] = useState(null);
-	const reconnectionAttemtsRemaining = useRef(0);
+	// const reconnectionAttemtsRemaining = useRef(0);
 
-	useEffect(() => {
-		onMessage.current = onMessageProp;
-		onClose.current = onCloseProp;
-	});
+	// const onMessage = useRef(onMessageProp);
+	// const onClose = useRef(onCloseProp);
+	// const onError = useRef(onErrorProp);
+	// const onOpen = useRef(onOpenProp);
+
+	// useEffect(() => {
+	// 	onMessage.current = onMessageProp;
+	// 	onClose.current = onCloseProp;
+	// 	onOpen.current = onOpenProp;
+	// 	onError.current = onErrorProp;
+	// }, [onMessageProp, onCloseProp, onOpenProp, onErrorProp]);
+
+	const onMessage = useCommitedRef(onMessageProp);
+	const onClose = useCommitedRef(onCloseProp);
+	const onError = useCommitedRef(onErrorProp);
+	const onOpen = useCommitedRef(onOpenProp);
 
 	const setupWs = useCallback(() => {
 		// if (!reconnectionAttemtsRemaining.current) {
 		// 	setReconnectionInterval(null);
 		// 	return;
 		// }
-		console.log(`remaining: ${reconnectionAttemtsRemaining.current}`);
 
 		// reconnectionAttemtsRemaining.current = reconnectionAttemtsRemaining.current - 1;
 
-		wsRef.current = new WebSocket(url);
-		wsRef.current.onmessage = (resp) => onMessage.current(JSON.parse(resp.data));
+		ws.current = new WebSocket(url);
+		ws.current.onmessage = (resp) => onMessage.current(JSON.parse(resp.data));
 
-		wsRef.current.onopen = (...args) => {
+		ws.current.onopen = (...args) => {
 			// reconnectionAttemtsRemaining.current = 5;
 			setReconnectionInterval(null);
 			onOpen.current(...args);
 		};
 
-		wsRef.current.onerror = (error) => {
+		ws.current.onerror = (error) => {
 			console.log(error);
 
 			onError.current(error);
 			setReconnectionInterval(2000);
 		};
 
-		wsRef.current.onclose = (...args) => {
+		ws.current.onclose = (...args) => {
 			// if (!reconnectionAttemtsRemaining.current) {
 			if (!reconnectionInterval) {
 				onClose.current(...args);
 			}
 		};
-	}, [reconnectionInterval, url]);
+	}, [onClose, onError, onMessage, onOpen, reconnectionInterval, url]);
 
 	useInterval(() => {
 		setupWs();
 	}, reconnectionInterval);
 
-	const connect = useCallback(() => {
-		if (wsRef.current) {
-			wsRef.current.close();
+	const close = () => {
+		if (ws.current) {
+			ws.current.close();
 		}
 		setReconnectionInterval(null);
+	};
+
+	const connect = useCallback(() => {
+		close();
 		// reconnectionAttemtsRemaining.current = 5;
 
 		setupWs();
 	}, [setupWs]);
 
-	const close = () => {
-		if (wsRef.current) {
-			wsRef.current.close();
+	const send = (frame) => {
+		if (ws.current && ws.current.readyState === WebSocket.OPEN) {
+			ws.current.send(JSON.stringify(frame));
 		}
-		setReconnectionInterval(null);
 	};
 
-	const send = (frame) => {
-		if (wsRef.current) {
-			wsRef.current.send(frame);
-		}
-	};
+	useEffect(() => () => close(), []);
 
 	return {
 		connect,
 		close,
 		send,
+		ws,
 	};
 };
 
 const endpoints = ['/v1', '/v2'];
 
-// useRef -> to point to the onMessage and onClose
-// connect as custom method
 const Example = () => {
 	const [numberOfClients, setNumberOfClients] = useState();
+	const [messages, setMessages] = useState([]);
+	const [message, setMessage] = useState('');
 	const [url, setUrl] = useState(endpoints[0]);
 
-	const { connect, close, status } = useWebsocket({
+	const { connect, close, send } = useWebsocket({
 		url: process.env.GATSBY_API_URL_WS + url,
 		onMessage: (message) => {
 			setNumberOfClients(message.numberOfClients);
+			setMessages(message.messages);
 		},
 		onClose: () => {
 			setNumberOfClients(null);
@@ -133,12 +148,34 @@ const Example = () => {
 
 	return (
 		<section>
-			<div>Status: {status}</div>
-			<div>Endpoint: {url}</div>
-			<div>Number of connected clients: {numberOfClients}</div>
+			<button type="button" onClick={() => connect()}>
+				Connect
+			</button>
+			<button type="button" onClick={() => close()}>
+				Close
+			</button>
 
-			<div>
-				<label htmlFor="url">
+			<hr />
+
+			<form
+				onSubmit={(event) => {
+					event.preventDefault();
+
+					send({ message });
+					setMessage('');
+				}}
+			>
+				<div>
+					<label htmlFor="message">Message</label>
+					<input
+						id="message"
+						value={message}
+						onChange={(event) => setMessage(event.target.value)}
+					/>
+				</div>
+
+				<div>
+					<label htmlFor="url">URL:</label>
 					<select
 						id="url"
 						onChange={(event) => {
@@ -152,11 +189,14 @@ const Example = () => {
 							</option>
 						))}
 					</select>
-				</label>
-			</div>
+				</div>
 
-			<button onClick={() => connect()}>Connect</button>
-			<button onClick={() => close()}>Close</button>
+				<button type="submit">Send</button>
+			</form>
+
+			<hr />
+			<div>Number of connected clients: {numberOfClients}</div>
+			<pre>{JSON.stringify(messages, null, 2)}</pre>
 		</section>
 	);
 };

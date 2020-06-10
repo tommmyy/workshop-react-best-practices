@@ -4,7 +4,8 @@
 
 - [Run project](#run-project)
 	- [Install](#install)
-	- [Run](#run)
+	- [Setup environment for development](#setup-environment-for-development)
+	- [Run develop](#run-develop)
 - [Working with the project](#working-with-the-project)
 	- [Exercises/solutions](#exercisessolutions)
 - [Prerequisites](#prerequisites)
@@ -19,7 +20,13 @@
 yarn
 ```
 
-### Run
+### Setup environment for development
+
+```
+yarn init:dev
+```
+
+### Run develop
 
 ```
 yarn start

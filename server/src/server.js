@@ -14,7 +14,7 @@ app.use(cors());
 const wss1 = new WebSocket.Server({ noServer: true });
 const wss2 = new WebSocket.Server({ noServer: true });
 
-const initialState = { clients: [], id: null };
+const initialState = { clients: [], messages: [], id: null };
 
 const state = { v1: { ...initialState }, v2: { ...initialState } };
 
@@ -23,39 +23,38 @@ const notifyClients = (state) => {
 		client.send(
 			JSON.stringify({
 				numberOfClients: state.clients.length,
+				messages: state.messages,
 			})
 		);
 	});
 };
 
-wss1.on('connection', (ws) => {
-	state.v1.clients = [...state.v1.clients, ws];
+const makeServer = (id) => (ws) => {
+	state[id].clients = [...state[id].clients, ws];
 
-	console.log('connection v1', state);
+	console.log(`connection ${id}`, state);
 
-	notifyClients(state.v1);
+	notifyClients(state[id]);
+
+	ws.on('message', (data) => {
+		const parsed = JSON.parse(data);
+
+		state[id].messages = [...state[id].messages, parsed.message];
+
+		notifyClients(state[id]);
+	});
 
 	ws.on('close', () => {
-		state.v1.clients = state.v1.clients.filter((x) => x !== ws);
-		console.log('closing v1', state);
+		state[id].clients = state[id].clients.filter((x) => x !== ws);
 
-		notifyClients(state.v1);
+		console.log(`closing ${id}`);
+		notifyClients(state[id]);
 	});
-});
+};
 
-wss2.on('connection', (ws) => {
-	state.v2.clients = [...state.v2.clients, ws];
-
-	console.log('connection v2', state);
-
-	notifyClients(state.v2);
-
-	ws.on('close', () => {
-		state.v2.clients = state.v2.clients.filter((x) => x !== ws);
-		console.log('closing v2', state);
-		notifyClients(state.v2);
-	});
-});
+// bit of duplicity never hurts
+wss1.on('connection', makeServer('v1'));
+wss2.on('connection', makeServer('v2'));
 
 server.on('upgrade', function upgrade(request, socket, head) {
 	const pathname = url.parse(request.url).pathname;
