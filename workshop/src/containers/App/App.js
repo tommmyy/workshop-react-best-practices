@@ -14,7 +14,7 @@ const App = ({ pages }) => (
 			<header className="App-header">
 				<img src={logo} className="App-logo" alt="logo" />
 				<p>Welcome to React Best Practices Workshop</p>
-				<ul>
+				<ul className="App-menu">
 					{pages
 						.filter(({ slug }) => slug.match(/exercise/))
 						.sort()

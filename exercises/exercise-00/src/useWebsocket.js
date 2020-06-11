@@ -35,6 +35,7 @@ const useWebsocket = ({
 	onError: onErrorProp = noop,
 	onOpen: onOpenProp = noop,
 	onMessage: onMessageProp = noop,
+	reconnectionIntervalMs = 5000,
 }) => {
 	const ws = useRef();
 	const [reconnectionInterval, setReconnectionInterval] = useState(null);
@@ -78,7 +79,7 @@ const useWebsocket = ({
 			console.log(error);
 
 			onError.current(error);
-			setReconnectionInterval(2000);
+			setReconnectionInterval(reconnectionIntervalMs);
 		};
 
 		ws.current.onclose = (...args) => {

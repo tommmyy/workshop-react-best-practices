@@ -9,6 +9,8 @@ const rootDir = path.join(__dirname, '..');
 
 const log = console.log;
 
+const configEnvPath = path.join(rootDir, 'packages', 'config', '.env');
+
 const run = async () => {
 	log(chalk.blue.bold('Creating `.env` file...'));
 	log(
@@ -17,8 +19,8 @@ const run = async () => {
 		)
 	);
 
-	await fs.copy(path.join(rootDir, '.env-sample'), path.join(rootDir, 'config', '.env'));
-	await fs.ensureLink(path.join(rootDir, 'config', '.env'), path.join(rootDir, '.env'));
+	await fs.copy(path.join(rootDir, '.env-sample'), configEnvPath);
+	await fs.ensureLink(configEnvPath, path.join(rootDir, '.env'));
 };
 
 /**

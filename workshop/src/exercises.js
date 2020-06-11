@@ -4,5 +4,6 @@ import { lazy } from 'react';
 export default {
 	'solution-00': lazy(() => import('@workshop/solution-00')),
 	'exercise-00': lazy(() => import('@workshop/exercise-00')),
-	'config': lazy(() => import('@workshop/config')),
+	'exercise-theme-ui': lazy(() => import('@workshop/exercise-theme-ui')),
+	'solution-theme-ui': lazy(() => import('@workshop/solution-theme-ui')),
 };

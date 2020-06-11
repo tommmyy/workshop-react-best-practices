@@ -24,9 +24,15 @@
 	},
 	"workspaces": [
 		"workshop",
-		"server",
-		"config",
 		"exercises/*",
-		"solutions/*"
-	]
+		"solutions/*",
+		"packages/*"
+	],
+	"resolutions": {
+		"theme-ui": "0.3.1",
+		"@theme-ui/color": "0.3.1",
+		"@theme-ui/match-media": "0.3.1",
+		"@theme-ui/presets": "0.3.0",
+		"@theme-ui/prism": "0.3.0"
+	}
 }

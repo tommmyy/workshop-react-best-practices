@@ -8,11 +8,9 @@ const pages = compose(
 		page,
 		slug: replace(/@workshop\//, '')(page),
 	})),
-	filter(test(/^\@workshop/)),
+	filter(test(/^\@workshop\/(exercise|solution)/)),
 	keys
 )(dependencies);
-
-console.log({ pages });
 
 exports.createPages = async ({ actions }) => {
 	const { createPage } = actions;

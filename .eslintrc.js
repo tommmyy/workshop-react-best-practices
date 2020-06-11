@@ -19,7 +19,7 @@ module.exports = {
 		'import/no-extraneous-dependencies': [
 			'error',
 			{
-				devDependencies: ['src/**/*.test.js', '*.config.js'],
+				devDependencies: ['src/**/*.test.js', '*.config.js', 'tools/*.js'],
 			},
 		],
 		// conflicts with Prettier
