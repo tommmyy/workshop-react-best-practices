@@ -1,5 +1,5 @@
 {
-	"name": "@workshop/exercise-00",
+	"name": "@workshop/exercise-hooks",
 	"version": "0.1.0",
 	"private": true,
 	"main": "src/index.js",
