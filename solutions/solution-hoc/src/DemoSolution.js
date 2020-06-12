@@ -56,14 +56,10 @@ const EnhancedLogger = compose(
 // console.log(EnhancedLogger.displayName);
 // console.log(EnhancedLogger.workshop);
 
-// withPropMapping
-// getDisplayName
-// hoistNonReactStatics
-// compose - order
 const Exercise = () => (
 	<Box>
 		<EnhancedLogger otherProp="hello" data="data" />
 	</Box>
 );
 
-export default DemoSolution;
+export default Exercise;
