@@ -6,6 +6,7 @@
 	"dependencies": {
 		"@theme-ui/presets": "^0.3.0",
 		"@workshop/config": "^0.1.0",
+		"ramda-extension": "^0.10.3",
 		"@workshop/ui-components": "^0.1.0",
 		"hoist-non-react-statics": "^3.3.2",
 		"prop-types": "^15.7.2",

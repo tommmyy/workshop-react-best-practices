@@ -6,14 +6,10 @@ import { isNilOrEmpty, keyMirror } from 'ramda-extension';
 const ActionTypes = keyMirror({
 	REQUEST: null,
 	SUCCESS: null,
-	ERROR: null,
-	RESET: null,
 });
 const request = (filterParams) => ({ type: ActionTypes.REQUEST, payload: filterParams });
 
 const success = (payload) => ({ type: ActionTypes.SUCCESS, payload });
-
-const failure = ({ error }) => ({ type: ActionTypes.SUCCESS, error });
 
 const apiUrl = 'https://api.github.com/repos/facebook/react/commits';
 
@@ -28,7 +24,7 @@ const fetchCommits = (dispatch) => async (filterParams) => {
 		dispatch(success(data));
 		return data;
 	} catch (error) {
-		dispatch(failure(error));
+		// TODO:
 	}
 };
 
@@ -45,22 +41,6 @@ const ghReducer = (state, action) => {
 				...state,
 				data: action.payload,
 				status: 'resolved',
-				error: null,
-			};
-		}
-		case ActionTypes.ERROR: {
-			return {
-				...state,
-				status: 'rejected',
-				error: action.error,
-				stored: null,
-			};
-		}
-		case ActionTypes.RESET: {
-			return {
-				...state,
-				status: null,
-				error: null,
 			};
 		}
 		default: {
