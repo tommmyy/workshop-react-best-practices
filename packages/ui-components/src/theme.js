@@ -2,7 +2,7 @@ import { system } from '@theme-ui/presets';
 
 const gutters = [2, 3, 4];
 
-export default {
+const theme = {
 	...system, //
 	grid: {
 		container: {
@@ -12,3 +12,5 @@ export default {
 		maxColumns: 12,
 	},
 };
+
+export default theme;

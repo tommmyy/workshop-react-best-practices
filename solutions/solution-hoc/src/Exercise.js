@@ -66,4 +66,4 @@ const Exercise = () => (
 	</Box>
 );
 
-export default DemoSolution;
+export default Exercise;

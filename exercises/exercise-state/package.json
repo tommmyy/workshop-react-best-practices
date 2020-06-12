@@ -1,0 +1,17 @@
+{
+	"name": "@workshop/exercise-state",
+	"version": "0.1.0",
+	"private": true,
+	"main": "src/index.js",
+	"dependencies": {
+		"@theme-ui/presets": "^0.3.0",
+		"ramda-extension": "^0.10.3",
+		"@workshop/config": "^0.1.0",
+		"@workshop/ui-components": "^0.1.0",
+		"hoist-non-react-statics": "^3.3.2",
+		"ramda": "^0.27.0",
+		"react": "^16.13.1",
+		"react-dom": "^16.13.1",
+		"theme-ui": "^0.3.1"
+	}
+}
