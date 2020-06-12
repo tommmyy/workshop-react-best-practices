@@ -1,5 +1,6 @@
 export {
 	jsx,
+	Card,
 	Input,
 	Label,
 	Text,
