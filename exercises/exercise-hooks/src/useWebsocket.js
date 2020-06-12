@@ -29,6 +29,8 @@ const useCommitedRef = (value) => {
 	return ref;
 };
 
+const noop = () => {};
+
 const useWebsocket = ({
 	url,
 	onClose: onCloseProp = noop,
@@ -37,90 +39,10 @@ const useWebsocket = ({
 	onMessage: onMessageProp = noop,
 	reconnectionIntervalMs = 5000,
 }) => {
-	const ws = useRef();
-	const [reconnectionInterval, setReconnectionInterval] = useState(null);
-	// const reconnectionAttemtsRemaining = useRef(0);
-
-	// const onMessage = useRef(onMessageProp);
-	// const onClose = useRef(onCloseProp);
-	// const onError = useRef(onErrorProp);
-	// const onOpen = useRef(onOpenProp);
-
-	// useEffect(() => {
-	// 	onMessage.current = onMessageProp;
-	// 	onClose.current = onCloseProp;
-	// 	onOpen.current = onOpenProp;
-	// 	onError.current = onErrorProp;
-	// }, [onMessageProp, onCloseProp, onOpenProp, onErrorProp]);
-
-	const onMessage = useCommitedRef(onMessageProp);
-	const onClose = useCommitedRef(onCloseProp);
-	const onError = useCommitedRef(onErrorProp);
-	const onOpen = useCommitedRef(onOpenProp);
-
-	const setupWs = useCallback(() => {
-		// if (!reconnectionAttemtsRemaining.current) {
-		// 	setReconnectionInterval(null);
-		// 	return;
-		// }
-
-		// reconnectionAttemtsRemaining.current = reconnectionAttemtsRemaining.current - 1;
-
-		ws.current = new WebSocket(url);
-		ws.current.onmessage = (resp) => onMessage.current(JSON.parse(resp.data));
-
-		ws.current.onopen = (...args) => {
-			// reconnectionAttemtsRemaining.current = 5;
-			setReconnectionInterval(null);
-			onOpen.current(...args);
-		};
-
-		ws.current.onerror = (error) => {
-			console.log(error);
-
-			onError.current(error);
-			setReconnectionInterval(reconnectionIntervalMs);
-		};
-
-		ws.current.onclose = (...args) => {
-			// if (!reconnectionAttemtsRemaining.current) {
-			if (!reconnectionInterval) {
-				onClose.current(...args);
-			}
-		};
-	}, [onClose, onError, onMessage, onOpen, reconnectionInterval, url]);
-
-	useInterval(() => {
-		setupWs();
-	}, reconnectionInterval);
-
-	const close = () => {
-		if (ws.current) {
-			ws.current.close();
-		}
-		setReconnectionInterval(null);
-	};
-
-	const connect = useCallback(() => {
-		close();
-		// reconnectionAttemtsRemaining.current = 5;
-
-		setupWs();
-	}, [setupWs]);
-
-	const send = (frame) => {
-		if (ws.current && ws.current.readyState === WebSocket.OPEN) {
-			ws.current.send(JSON.stringify(frame));
-		}
-	};
-
-	useEffect(() => () => close(), []);
-
 	return {
-		connect,
-		close,
-		send,
-		ws,
+		connect: noop,
+		close: noop,
+		send: noop,
 	};
 };
 
@@ -143,21 +65,8 @@ const Example = () => {
 		},
 	});
 
-	useEffect(() => {
-		connect();
-	}, [connect]);
-
 	return (
 		<section>
-			<button type="button" onClick={() => connect()}>
-				Connect
-			</button>
-			<button type="button" onClick={() => close()}>
-				Close
-			</button>
-
-			<hr />
-
 			<form
 				onSubmit={(event) => {
 					event.preventDefault();

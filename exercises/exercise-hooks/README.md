@@ -58,3 +58,4 @@ Upravte hook tak, aby se o rekonekci pokoušel jen `n`-krát.
 
 ## 7. `useCommitedRef`
 Refaktorujte pomocí __commited reference__ patternu.
+
