@@ -12,6 +12,7 @@
 - [IDE](#ide)
 
 <!-- TOC -->
+
 ## Run project
 
 ### Install
@@ -31,6 +32,7 @@ yarn init:dev
 ```
 yarn start
 ```
+
 ## Working with the project
 
 ### Exercises/solutions
@@ -39,7 +41,6 @@ Exercises are placed in the `exercises/*` folder.
 Every exercise is its own small litle node module.
 So you can install dependencies directly for the exercise.
 Every exercise has its own `README.md` with the description of the assigment.
-
 
 Solutions are placed in the `solutions/*` folder.
 Explanation and needed theory will be explained at workshop.

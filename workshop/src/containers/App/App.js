@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'gatsby';
 
 import { Layout } from '../../components';
+import * as types from '../../types';
 
 import logo from './logo.svg';
 
@@ -32,7 +33,7 @@ const App = ({ pages }) => (
 );
 
 App.propTypes = {
-	pages: PropTypes.arrayOf(PropTypes.shape({ slug: PropTypes.string, page: PropTypes.string })),
+	pages: PropTypes.arrayOf(types.Page),
 };
 
 export default App;

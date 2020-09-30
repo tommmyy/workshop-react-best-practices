@@ -19,8 +19,15 @@ const run = async () => {
 		)
 	);
 
-	await fs.copy(path.join(rootDir, '.env-sample'), configEnvPath);
-	await fs.ensureLink(configEnvPath, path.join(rootDir, '.env'));
+	try {
+		await fs.copy(path.join(rootDir, '.env-sample'), configEnvPath);
+		await fs.copy(path.join(rootDir, '.env-sample'), path.join(rootDir, '.env'));
+
+		// FIXME: following is not working on win
+		// await fs.ensureLink(configEnvPath, path.join(rootDir, '.env'));
+	} catch (error) {
+		console.error(error);
+	}
 };
 
 /**
