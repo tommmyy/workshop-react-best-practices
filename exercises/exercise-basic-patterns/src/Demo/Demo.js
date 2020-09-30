@@ -2,7 +2,7 @@ import React from 'react';
 
 import InlineText from './InlineText';
 
-// - Defaulting props - defaultProps
+// - Defaulting props - defaultProps - `as`
 // - Class vs Function
 // - Arrow vs. Function
 // - prop-types

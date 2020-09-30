@@ -1,8 +1,8 @@
 import React, { Suspense } from 'react';
 import PropTypes from 'prop-types';
 
-// import Layout from '../components/Layout';
-import Layout from '../components/Layout/LayoutStyled';
+import Layout from '../components/Layout';
+// import Layout from '../components/Layout/LayoutStyled';
 import exercises from '../exercises';
 
 const Exercise = ({ pageContext: { slug } }) => {

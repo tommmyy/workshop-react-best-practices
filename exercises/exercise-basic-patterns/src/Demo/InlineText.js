@@ -2,7 +2,7 @@
 import React from 'react';
 import { Text } from 'theme-ui';
 
-// - Defaulting props - defaultProps
+// - Defaulting props - defaultProps - `as`
 // - Class vs Function
 // - Arrow vs. Function
 // - prop-types
