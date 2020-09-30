@@ -6,7 +6,7 @@ import InlineText from './InlineText';
 // - Class vs Function
 // - Arrow vs. Function
 // - prop-types
-// - forwarding
+// - forwarding - pass the `ref` as fn and log it
 const Demo = () => <InlineText>Inline text</InlineText>;
 
 export default Demo;

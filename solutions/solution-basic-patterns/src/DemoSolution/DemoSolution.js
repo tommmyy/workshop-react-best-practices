@@ -4,9 +4,15 @@ import { Box } from 'theme-ui';
 import InlineText from './InlineText';
 
 const Demo = () => (
-	<Box>
-		<InlineText>InlineText</InlineText>
-	</Box>
-);
+		<Box>
+			<InlineText
+				ref={(textRef) => {
+					console.log(textRef);
+				}}
+			>
+				InlineText
+			</InlineText>
+		</Box>
+	);
 
 export default Demo;

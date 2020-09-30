@@ -6,7 +6,7 @@ import { Text } from 'theme-ui';
 // - Class vs Function
 // - Arrow vs. Function
 // - prop-types
-// - forwarding
+// - forwarding - pass the `ref` as fn and log it
 const InlineText = ({ children }) => children;
 
 export default InlineText;
