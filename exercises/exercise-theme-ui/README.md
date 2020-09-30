@@ -90,5 +90,5 @@ const myTheme = {
 }
 ```
 
-Hodnoty je možné v kompnentě číst pomocí [`useThemeUI`](https://theme-ui.com/use-theme-ui).
+Hodnoty je možné v komponentě číst pomocí [`useThemeUI`](https://theme-ui.com/use-theme-ui).
 
