@@ -7,6 +7,7 @@ const ActionTypes = keyMirror({
 	REQUEST: null,
 	SUCCESS: null,
 });
+
 const request = (filterParams) => ({ type: ActionTypes.REQUEST, payload: filterParams });
 
 const success = (payload) => ({ type: ActionTypes.SUCCESS, payload });
@@ -114,22 +115,22 @@ const TinyForm = () => {
 				<Col span={[12, 12, 6]}>
 					<Heading>Github Facebook History</Heading>
 
-					<Label htmlFor="perPage">Per page:</Label>
-					<Input
-						id="perPage"
-						type="number"
-						value={formState.per_page}
-						name="per_page"
-						onChange={formChange}
-					/>
-
-					<Label htmlFor="page">Per page:</Label>
+					<Label htmlFor="page">Page:</Label>
 					<Input
 						type="number"
 						mb={3}
 						id="page"
 						value={formState.page}
 						name="page"
+						onChange={formChange}
+					/>
+
+					<Label htmlFor="perPage">Per page:</Label>
+					<Input
+						id="perPage"
+						type="number"
+						value={formState.per_page}
+						name="per_page"
 						onChange={formChange}
 					/>
 

@@ -13,6 +13,7 @@ const request = (filterParams) => ({ type: ActionTypes.REQUEST, payload: filterP
 
 const success = (payload) => ({ type: ActionTypes.SUCCESS, payload });
 
+// >
 const failure = ({ error }) => ({ type: ActionTypes.SUCCESS, error });
 
 const reset = () => ({ type: ActionTypes.RESET });
@@ -30,6 +31,7 @@ const fetchCommits = (dispatch) => async (filterParams) => {
 		dispatch(success(data));
 		return data;
 	} catch (error) {
+		// >
 		dispatch(failure(error));
 	}
 };
@@ -50,6 +52,7 @@ const ghReducer = (state, action) => {
 				error: null,
 			};
 		}
+		// >
 		case ActionTypes.ERROR: {
 			return {
 				...state,
@@ -58,6 +61,7 @@ const ghReducer = (state, action) => {
 				stored: null,
 			};
 		}
+		// >
 		case ActionTypes.RESET: {
 			return {
 				...state,
@@ -136,6 +140,16 @@ const TinyForm = () => {
 				<Col span={[12, 12, 6]}>
 					<Heading>Github Facebook History</Heading>
 
+					<Label htmlFor="page">Page:</Label>
+					<Input
+						type="number"
+						mb={3}
+						id="page"
+						value={formState.page}
+						name="page"
+						onChange={formChange}
+					/>
+
 					<Label htmlFor="perPage">Per page:</Label>
 					<Input
 						id="perPage"
@@ -145,15 +159,6 @@ const TinyForm = () => {
 						onChange={formChange}
 					/>
 
-					<Label htmlFor="page">Per page:</Label>
-					<Input
-						type="number"
-						mb={3}
-						id="page"
-						value={formState.page}
-						name="page"
-						onChange={formChange}
-					/>
 					<Flex>
 						<Button mb={3} type="submit" disabled={isPending}>
 							Fetch me data
