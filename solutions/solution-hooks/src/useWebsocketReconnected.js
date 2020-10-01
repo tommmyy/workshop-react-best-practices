@@ -10,6 +10,24 @@ const useCommitedRef = (value) => {
 	return ref;
 };
 
+// 2a. Reconnection
+// const useInterval = (callback, delay) => {
+// 	const callbackRef = useCommitedRef(callback);
+
+// 	useEffect(() => {
+// 		if (delay != null && callbackRef.current) {
+// 			const tick = () => {
+// 				callbackRef.current();
+// 			};
+// 			const id = setInterval(tick, delay);
+
+// 			return () => {
+// 				clearInterval(id);
+// 			};
+// 		}
+// 	}, [delay]);
+// };
+
 const noop = () => {};
 
 const useWebsocket = ({
@@ -18,8 +36,11 @@ const useWebsocket = ({
 	onError: onErrorProp = noop,
 	onOpen: onOpenProp = noop,
 	onMessage: onMessageProp = noop,
+	// reconnectionIntervalMs = 5000,
 }) => {
 	const ws = useRef();
+	// 2c. reconnection
+	// const [reconnectionInterval, setReconnectionInterval] = useState(null);
 
 	const onMessage = useCommitedRef(onMessageProp);
 	const onClose = useCommitedRef(onCloseProp);
@@ -31,6 +52,8 @@ const useWebsocket = ({
 		ws.current.onmessage = (resp) => onMessage.current(JSON.parse(resp.data));
 
 		ws.current.onopen = (...args) => {
+			// 2d. reconnection
+			// setReconnectionInterval(null);
 			onOpen.current(...args);
 		};
 
@@ -38,18 +61,32 @@ const useWebsocket = ({
 			console.log(error);
 
 			onError.current(error);
+			// 2e. reconnection
+			// setReconnectionInterval(reconnectionIntervalMs);
 		};
 
 		ws.current.onclose = (...args) => {
+			// 2f. reconnection
+			// if (!reconnectionInterval) {
+			// 	onClose.current(...args);
+			// }
 			onClose.current(...args);
 		};
-		// }, [onClose, onError, onMessage, onOpen, url]);
-	}, [url]);
+	}, [onClose, onError, onMessage, onOpen, url]);
+	// 2g.
+	// }, [onClose, onError, onMessage, onOpen, reconnectionInterval, reconnectionIntervalMs, url]);
+
+	// 2b. reconnection
+	// useInterval(() => {
+	// 	setupWs();
+	// }, reconnectionInterval);
 
 	const close = () => {
 		if (ws.current) {
 			ws.current.close();
 		}
+		// 2h.
+		// setReconnectionInterval(null);
 	};
 
 	const connect = useCallback(() => {
