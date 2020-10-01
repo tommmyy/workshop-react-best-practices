@@ -4,9 +4,9 @@ import { Box } from 'theme-ui';
 const Logger = ({ ...props }) => <Box as="pre">{JSON.stringify(props, null, 2)}</Box>;
 Logger.workshop = true;
 
-// withPropMapping
-// getDisplayName
-// hoistNonReactStatics
+// withPropMapping (NoHoist)- HoC for remapping props
+// support displayName - utility fn: getDisplayName
+// hoistNonReactStatics - withPropMapping
 // compose - order
 const Demo = () => (
 	<Box>

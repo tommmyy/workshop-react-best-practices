@@ -53,13 +53,6 @@ const EnhancedLogger = compose(
 	withFallback({ getControlProp: ({ loading }) => !!loading, fallback: <div>Waiting</div> })
 )(Logger);
 
-// console.log(EnhancedLogger.displayName);
-// console.log(EnhancedLogger.workshop);
-
-// withPropMapping
-// getDisplayName
-// hoistNonReactStatics
-// compose - order
 const Exercise = () => (
 	<Box>
 		<EnhancedLogger otherProp="hello" data="data" />
