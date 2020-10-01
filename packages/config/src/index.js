@@ -1,3 +1,5 @@
+const path = require('path');
+
 const envalid = require('envalid');
 const { isEmpty } = require('ramda');
 
@@ -11,7 +13,7 @@ const reporter = ({ errors }) => {
 
 const options = {
 	reporter,
-	dotEnvPath: '../.env',
+	dotEnvPath: path.join(__dirname, '../.env'),
 };
 
 module.exports.env = envalid.cleanEnv(

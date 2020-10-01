@@ -29,8 +29,6 @@ const useCommitedRef = (value) => {
 	return ref;
 };
 
-const noop = () => {};
-
 const useWebsocket = ({
 	url,
 	onClose: onCloseProp = noop,
@@ -38,13 +36,11 @@ const useWebsocket = ({
 	onOpen: onOpenProp = noop,
 	onMessage: onMessageProp = noop,
 	reconnectionIntervalMs = 5000,
-}) => {
-	return {
+}) => ({
 		connect: noop,
 		close: noop,
 		send: noop,
-	};
-};
+	});
 
 const endpoints = ['/v1', '/v2'];
 
