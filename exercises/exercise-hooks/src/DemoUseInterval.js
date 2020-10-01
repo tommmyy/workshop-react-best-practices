@@ -1,5 +1,6 @@
 // Custom hook - useInterval
 // Syncing with useRef
+// Introduce useCommitedRef
 
 import React, { useEffect, useState } from 'react';
 import { Box, Button, Text } from '@workshop/ui-components';

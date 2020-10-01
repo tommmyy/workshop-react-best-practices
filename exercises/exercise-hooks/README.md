@@ -1,4 +1,8 @@
+# `useInterval`
+Zkus implementovat `useInterval`.
+
 # `useWebsocket`
+
 Vytvoříme hook, který nám umožní využít websocket k navázání realtime obousměrné komunikace se serverem.
 
 Nesnažíme se vytvořit neprůstřelnou knihovnu,

@@ -18,12 +18,12 @@ import { Box, Button, Text } from '@workshop/ui-components';
 // 		}
 // 	}, [callback, interval]);
 // };
-//
+
 // 3.
 // remove [callback]
 // - adds new interval when interval changes
 // 	}, [interval]);
-//
+
 // 4.
 // add clearInterval
 // - everything OK, except is NOT
@@ -40,13 +40,42 @@ import { Box, Button, Text } from '@workshop/ui-components';
 // 		}
 // 	}, [interval, callback]);
 // };
-//
-const useInterval = (callback, interval) => {
-	const cbRef = useRef(callback);
 
+// 5.
+// Working example
+// - there is no dep on callback, the effect is not restared
+// - we just keep ref to latest greatest callback
+
+// const useInterval = (callback, interval) => {
+// 	const cbRef = useRef(callback);
+
+// 	useEffect(() => {
+// 		cbRef.current = callback;
+// 	});
+
+// 	useEffect(() => {
+// 		if (interval != null) {
+// 			const tick = () => {
+// 				cbRef.current();
+// 			};
+// 			const id = setInterval(tick, interval);
+
+// 			return () => clearInterval(id);
+// 		}
+// 	}, [interval]);
+// };
+
+// 6. useCommitedRef refactor
+const useCommitedRef = (fn) => {
+	const fnRef = useRef(fn);
 	useEffect(() => {
-		cbRef.current = callback;
+		fnRef.current = fn;
 	});
+	return fnRef;
+};
+
+const useInterval = (callback, interval) => {
+	const cbRef = useCommitedRef(callback);
 
 	useEffect(() => {
 		if (interval != null) {
