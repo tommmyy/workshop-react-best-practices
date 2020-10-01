@@ -4,7 +4,9 @@ import { Button, Text } from '@workshop/ui-components';
 
 // ifs, loops, name-convention
 // useState
-// useEffect - použití
+// useEffect (demonstrate on Tap)
+// - dependencies
+// - how to think? [Myths about useEffect](https://epicreact.dev/myths-about-useeffect/)
 // useRef
 const Tap = ({ a, b }) => (
 	<Text>

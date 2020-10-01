@@ -7,10 +7,12 @@ import { Button, Text } from '@workshop/ui-components';
 // useRef
 // useCallback
 const Tap = ({ a, b }) => {
+	// all state
 	useEffect(() => {
 		console.log('A', { a, b });
 	});
 
+	// a state
 	useEffect(
 		() => {
 			console.log('B', { a, b });
@@ -19,6 +21,7 @@ const Tap = ({ a, b }) => {
 		[a]
 	);
 
+	// no state
 	useEffect(
 		() => {
 			console.log('C', { a, b });
@@ -27,6 +30,7 @@ const Tap = ({ a, b }) => {
 		[]
 	);
 
+	// clean-up
 	useEffect(() => () => {}, []);
 
 	return (

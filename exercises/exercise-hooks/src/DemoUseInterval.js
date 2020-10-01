@@ -1,44 +1,22 @@
-import React, { useEffect, useRef, useState } from 'react';
+// Custom hook - useInterval
+// Syncing with useRef
+
+import React, { useEffect, useState } from 'react';
 import { Box, Button, Text } from '@workshop/ui-components';
 
-// const useInterval = (callback, interval) => {
-// 	if (interval) {
-// 		setInterval(callback, interval);
-// 	}
-// };
-
-// const useInterval = (callback, interval) => {
-// 	useEffect(() => {
-// 		if (interval != null) {
-// 			setInterval(callback, interval);
-// 		}
-// 	}, [callback, interval]);
-// };
-//
-//
 const useInterval = (callback, interval) => {
-	const cbRef = useRef(callback);
-
-	useEffect(() => {
-		cbRef.current = callback;
-	}, [callback]);
-
-	useEffect(() => {
-		if (interval != null) {
-			const id = setInterval(cbRef.current, interval);
-
-			return () => clearInterval(id);
-		}
-	}, [interval]);
+	if (interval) {
+		setInterval(callback, interval);
+	}
 };
 
-// Custom hook - useInterval
-const Demo = () => {
+const CounterApp = ({ random }) => {
 	const [counter, setCounter] = useState(0);
 	const [interval, setInterval] = useState(null);
 
 	useInterval(() => {
-		console.log('tick');
+		console.log('counter', counter, random);
+
 		setCounter((x) => x + 1);
 	}, interval);
 
@@ -48,10 +26,24 @@ const Demo = () => {
 		<Box>
 			<Text>{counter}</Text>
 			<Text>
-				<Button onClick={handleClick}>Toggle inteval</Button>
+				<Button onClick={handleClick}>Toggle interval</Button>
 			</Text>
 		</Box>
 	);
+};
+
+const Demo = () => {
+	const [random, setRandom] = useState(0);
+
+	useEffect(() => {
+		const id = setTimeout(() => {
+			setRandom(Math.random());
+		}, 1000);
+
+		return () => clearTimeout(id);
+	});
+
+	return <CounterApp random={random} />;
 };
 
 export default Demo;
