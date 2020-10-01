@@ -1,14 +1,23 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 
-const useInterval = (callback, delay) => {
-	const callbackRef = useRef(callback);
+const useCommitedRef = (value) => {
+	const ref = useRef(value);
+
 	useEffect(() => {
-		callbackRef.current = callback;
-	}, [callback]);
+		ref.current = value;
+	}, [value]);
+
+	return ref;
+};
+const useInterval = (callback, delay) => {
+	const callbackRef = useCommitedRef(callback);
 
 	useEffect(() => {
 		if (delay != null && callbackRef.current) {
-			const id = setInterval(() => callbackRef.curent(), delay);
+			const tick = () => {
+				callbackRef.current();
+			};
+			const id = setInterval(tick, delay);
 
 			return () => {
 				clearInterval(id);
@@ -19,16 +28,6 @@ const useInterval = (callback, delay) => {
 
 const noop = () => {};
 
-const useCommitedRef = (value) => {
-	const ref = useRef(value);
-
-	useEffect(() => {
-		ref.current = value;
-	}, [value]);
-
-	return ref;
-};
-
 const useWebsocket = ({
 	url,
 	onClose: onCloseProp = noop,
@@ -37,10 +36,10 @@ const useWebsocket = ({
 	onMessage: onMessageProp = noop,
 	reconnectionIntervalMs = 5000,
 }) => ({
-		connect: noop,
-		close: noop,
-		send: noop,
-	});
+	connect: noop,
+	close: noop,
+	send: noop,
+});
 
 const endpoints = ['/v1', '/v2'];
 
