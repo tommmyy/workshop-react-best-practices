@@ -1,7 +1,7 @@
 # Theme-ui
 
 ## 1. Základy
-Pohrajte si s [theme-ui](https://theme-ui.com/):
+Pohrajte si s [theme-ui](https://theme-ui.com/home):
 
 ### `sx`
 - Vyrenderujte Box a nastavte mu nějaké styly pomocí `sx` atributu.
@@ -15,23 +15,26 @@ Vyzkoušejte různé presety z `@theme-ui/presets`.
 
 ## 2. Tvorba Grid-frameworku
 
-Vytvořme mini-framework po vzoru [Bootstrap](https://getbootstrap.com/docs/4.5/layout/grid/), který definuje CSS grid pomocí sloupcové jednotky.
+Vytvořme mini-framework po vzoru [Bootstrap](https://getbootstrap.com/docs/4.5/layout/grid/), který definuje CSS grid framework pomocí sloupcové jednotky.
 
-Framework se skládá z následující trojice komponent:
+Framework se bude skládat z následující trojice komponent:
 
-- `<Container />`
-	- Nastaví šířku - width: 100%
-- `<Row />` - řádek
-	- Nastaví **negativní** horizontální margin
-	- props:
-		- `gutters` - horizontální margin
-		- `margin-left/right: -gutters`
-- `<Col />`
-	- Wrapper pro obsah v sloupci o velikosti `span`.
-	- Props:
-		- `span` - nastaví jak široký je prvek: 2 = dva sloupce
-		- `maxColumns` - kolik sloupců představuje 100% šířku kontejneru
-		- `gutters` - horizontální padding v sloupci
+### `<Container />`
+- Nastaví šířku - width: 100%
+
+### `<Row />` - řádek
+- Nastaví **negativní** horizontální margin na základě `gutters`
+- E.g: - Styly: `margin-left/right: -gutters`
+- Props:
+	- `gutters` - horizontální margin
+	- Typ:  nezapomeňte nastavit `flexWrap: 'wrap'`
+
+### `<Col />`
+- Wrapper pro obsah v sloupci o velikosti `span`.
+- Props:
+	- `span` - nastaví jak široký je prvek: 2 = dva sloupce
+	- `maxColumns` - kolik sloupců představuje 100% šířku kontejneru
+	- `gutters` - horizontální padding v sloupci
 
 
 ### Příklad použití:
@@ -91,4 +94,9 @@ const myTheme = {
 ```
 
 Hodnoty je možné v komponentě číst pomocí [`useThemeUI`](https://theme-ui.com/use-theme-ui).
+
+# 3. Výběr témy (bonus)
+
+1. Umožněte uživateli vybrat tému z [@theme-ui/presets](https://theme-ui.com/packages/presets).
+2. Umožněte uživateli přepnout [colorMode](https://theme-ui.com/color-modes)
 

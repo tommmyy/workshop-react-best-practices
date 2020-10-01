@@ -1,3 +1,4 @@
+// step 3 - theme and colormode switcher
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import {
@@ -23,9 +24,7 @@ const createTheme = mergeDeepLeft({
 const availableThemes = keys(presets);
 
 const Switcher = ({ theme, onChangeTheme }) => {
-	const { setColorMode, colorMode, ...rest } = useThemeUI();
-	// console.log(rest);
-	console.log(rest.theme.buttons);
+	const { setColorMode, colorMode } = useThemeUI();
 
 	const handleOnClickTheme = () => {
 		const index = indexOf(theme, availableThemes);
@@ -60,7 +59,7 @@ const ThemeUi = () => {
 
 	return (
 		<ThemeProvider theme={createTheme(presets[theme])}>
-			<Container>
+			<Container sx={{ p: 4 }}>
 				<Row>
 					<Col span={12}>
 						<Switcher

@@ -1,3 +1,4 @@
+// step 1 - Solution
 import React from 'react';
 import PropTypes from 'prop-types';
 import { mapResponsiveProperty } from '@workshop/utils';
@@ -12,19 +13,15 @@ const createTheme = mergeDeepLeft({
 	},
 });
 
-const spanToWidth = (maxColumns) => (columnSpan) => `${(columnSpan / maxColumns) * 100}%`;
-
 const Col = ({ sx, span, maxColumns: maxColumnsProp, ...rest }) => {
-	const { theme: { grid: { maxColumns, gutters = 2 } = {} } = {} } = useThemeUI();
+	const { theme: { grid: { maxColumns: maxColumnsTheme, gutters = 2 } = {} } = {} } = useThemeUI();
+	const maxColumns = maxColumnsProp == null ? maxColumnsTheme : maxColumnsProp;
 
 	return (
 		<Box
 			sx={{
 				px: gutters,
-				width: mapResponsiveProperty(
-					spanToWidth(maxColumnsProp != null ? maxColumns : maxColumnsProp),
-					span
-				),
+				width: mapResponsiveProperty((columnSpan) => `${(columnSpan / maxColumns) * 100}%`, span),
 				...sx,
 			}}
 			{...rest}
@@ -40,7 +37,7 @@ Col.propTypes = {
 const Row = ({ sx, ...rest }) => {
 	const { theme: { grid: { gutters } = {} } = {} } = useThemeUI();
 
-	return <Flex sx={{ mx: -gutters, ...sx }} {...rest} />;
+	return <Flex sx={{ flexWrap: 'wrap', mx: -gutters, ...sx }} {...rest} />;
 };
 Row.propTypes = { sx: PropTypes.object };
 
@@ -50,7 +47,7 @@ Container.propTypes = { sx: PropTypes.object };
 
 const ThemeUi = () => (
 	<ThemeProvider theme={createTheme(presets.system)}>
-		<Container>
+		<Container p={2}>
 			<Row>
 				<Col span={[12, 12, 6]}>half</Col>
 				<Col span={6}>half</Col>
