@@ -29,6 +29,7 @@ const fetchCommits = (dispatch) => async (filterParams) => {
 	}
 };
 
+// 2b:
 const ghReducer = (state, action) => {
 	switch (action.type) {
 		case ActionTypes.REQUEST: {
@@ -50,9 +51,11 @@ const ghReducer = (state, action) => {
 	}
 };
 
+// 1 ---
 const GhContext = createContext();
 
 const GHProvider = (props) => {
+	// 2a:
 	const [state, dispatch] = useReducer(ghReducer, { data: null, status: null });
 
 	return <GhContext.Provider {...props} value={{ state, dispatch }} />;
@@ -67,6 +70,7 @@ const useGHCommits = () => {
 
 	return api;
 };
+// 1 ---end
 
 const Display = () => {
 	const { state } = useGHCommits();
