@@ -40,9 +40,9 @@ Framework se bude skládat z následující trojice komponent:
 ### Příklad použití:
 
 ```js
-<Container maxColumns={12}>
+<Container>
 	<Row>
-		<Col span={6}>50% šířdy kontejneru</Col>
+		<Col maxColumns={18} span={6}>33% šířky kontejneru</Col>
 		<Col span={6}>6</Col>
 	</Row>
 	<Row>
